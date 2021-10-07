@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>
+            Employee Page
+        </title>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  
+       
+    </head>
+
+    <body>
+        <div id="employee-header"></div>
+        <form>
+            <h3>Add a request</h3>
+            <label for="new-request-description">Request Description</label>
+            <input type="text" id="new-request-description"><br><br>
+            <button id="new-request-b">submit request</button>
+        </form>
+        <div style=" height: 500px !important;
+        overflow: scroll; ">
+        <table class="table table-striped">
+            <h3>Pending Requests Table</h3>
+            <thead>
+                <tr>
+                    <th scope="col">Resquest Description</th>
+                    <th scope="col">Status</th>
+                </tr> 
+            </thead>
+            <tbody id="pending-table-body">
+            </tbody>          
+        </table>
+    </div>
+        <br><br>
+        <div style=" height: 500px !important;
+        overflow: scroll;">
+        <table class="table table-striped">
+            <h3>Resolved Requests Table</h3>
+            <thead>
+                <tr>
+                    <th>Resquest Description</th>
+                    <th>Status</th>
+                </tr> 
+            </thead>
+            <tbody id="resolved-table-body">
+            </tbody>          
+        </table>
+    </div>
+    </body>
+    <script src="employee.js"></script>
+</html>

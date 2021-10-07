@@ -124,7 +124,6 @@ public class RequestDaoImpl implements RequestDao{
         try {
             Connection c = connectionService.establishConnection();
             PreparedStatement stmt = c.prepareStatement(sql);
-            stmt.setInt(1, user_id);
             ResultSet rs = stmt.executeQuery();
 
             while(rs.next()){
@@ -149,7 +148,6 @@ public class RequestDaoImpl implements RequestDao{
         try {
             Connection c = connectionService.establishConnection();
             PreparedStatement stmt = c.prepareStatement(sql);
-            stmt.setInt(1, user_id);
             ResultSet rs = stmt.executeQuery();
 
             while(rs.next()){

@@ -1,7 +1,5 @@
 package dev.huai.servlets;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import dev.huai.models.Request;
 import dev.huai.models.User;
 import dev.huai.models.UserRole;
 import dev.huai.services.AuthService;
@@ -13,9 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
-public class NewRequestServlet extends HttpServlet {
-
+public class UpdatingRequestServlet extends HttpServlet {
     private AuthService authService = new AuthService();
     private RequestServices requestServices = new RequestServices();
 
@@ -34,21 +30,29 @@ public class NewRequestServlet extends HttpServlet {
                 resp.sendError(401, "Auth token invalid - no user");
             } else {
                 // if there is a valid token and that token is for an admin, return list of users
-                if(currentUser.getUserRole() == UserRole.EMPLOYEE){
-                    //resp.setStatus(200);
-                    Request request = new Request();
-                    request.setDescription(req.getParameter("description"));
-                    request.setUser_id(Integer.parseInt(req.getParameter("user_id")));
-                    if(requestServices.addRequest(request.getUser_id(), request.getDescription()))
-                        resp.setStatus(200);
-                    else
-                        resp.sendError(400, "Unknown error");
+                if(currentUser.getUserRole() == UserRole.MANAGER){
+                    System.out.println("I am a manager");
+                    int request_id = Integer.parseInt(req.getParameter("request_id"));
+                    String action = req.getParameter("action_type");
+                    System.out.println("request_id is" + request_id+"action is " + action);
+                    if(action.equals("deny")){
+                        if(requestServices.denyRequestByID(request_id, currentUser.getUser_id()))
+                            resp.setStatus(200);
+                        else
+                            resp.sendError(400, "Database went wrong; cannot fulfill your request");
+                    }
+                    else if(action.equals("approve")){
+                        if(requestServices.approveRequestByID(request_id, currentUser.getUser_id()))
+                            resp.setStatus(200);
+                        else
+                            resp.sendError(400, "Database went wrong; cannot fulfill your request");
+                    }
                 } else {
                     // if there is a valid token, but it's that of a general user rather than an admin, we could send back a 403
                     resp.sendError(403, "Invalid user role for current request");
                 }
             }
-
         }
     }
+
 }

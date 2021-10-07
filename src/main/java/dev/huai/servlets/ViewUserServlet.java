@@ -1,11 +1,9 @@
 package dev.huai.servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dev.huai.models.Request;
 import dev.huai.models.User;
 import dev.huai.models.UserRole;
 import dev.huai.services.AuthService;
-import dev.huai.services.RequestServices;
 import dev.huai.services.UserServices;
 
 import javax.servlet.ServletException;
@@ -16,10 +14,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-public class ResolvedRequestServlet extends HttpServlet {
-
+public class ViewUserServlet extends HttpServlet {
     private AuthService authService = new AuthService();
-    private RequestServices requestServices = new RequestServices();
+    private UserServices userServices = new UserServices();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String authToken = req.getHeader("Authorization");
@@ -35,32 +33,20 @@ public class ResolvedRequestServlet extends HttpServlet {
                 resp.sendError(401, "Auth token invalid - no user");
             } else {
                 // if there is a valid token and that token is for an admin, return list of users
-                if(currentUser.getUserRole() == UserRole.EMPLOYEE){
-                    resp.setStatus(200);
+                if(currentUser.getUserRole() == UserRole.MANAGER){
 
                     try(PrintWriter pw = resp.getWriter()){
-                        List<Request> pendingRequests = requestServices.getResolvedRequestsByID(currentUser.getUser_id());
+                        List<User> allEmployees = userServices.getAllEmployees();
                         ObjectMapper om = new ObjectMapper();
-                        String requestJson = om.writeValueAsString(pendingRequests);
+                        String requestJson = om.writeValueAsString(allEmployees);
                         pw.write(requestJson);
-                        // write to response body
+                        resp.setStatus(200);
                     }
-                } else if(currentUser.getUserRole() == UserRole.MANAGER){
-                    resp.setStatus(200);
-
-                    try(PrintWriter pw = resp.getWriter()) {
-                        List<Request> pendingRequests = requestServices.getResolvedRequestsByManager(currentUser.getUser_id());
-                        ObjectMapper om = new ObjectMapper();
-                        String requestJson = om.writeValueAsString(pendingRequests);
-                        pw.write(requestJson);
-                    }
-
-                }else {
+                } else {
                     // if there is a valid token, but it's that of a general user rather than an admin, we could send back a 403
                     resp.sendError(403, "Invalid user role for current request");
                 }
             }
-
 
         }
     }

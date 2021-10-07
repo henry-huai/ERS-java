@@ -1,6 +1,5 @@
 package dev.huai.daos;
 
-import dev.huai.models.Request;
 import dev.huai.models.User;
 import dev.huai.models.UserRole;
 import dev.huai.services.ConnectionService;

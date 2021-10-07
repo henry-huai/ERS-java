@@ -1,5 +1,7 @@
 package dev.huai.models;
 
+import java.util.Objects;
+
 public class User {
 
     private int user_id;
@@ -51,5 +53,18 @@ public class User {
 
     public void setUserRole(UserRole userRole) {
         this.userRole = userRole;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return user_id == user.user_id && userRole == user.userRole && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(email, user.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(user_id, userRole, firstName, lastName, email);
     }
 }

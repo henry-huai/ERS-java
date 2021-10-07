@@ -2,10 +2,8 @@ package dev.huai.services;
 
 import dev.huai.daos.UserDao;
 import dev.huai.daos.UserDaoImpl;
-import dev.huai.models.Request;
 import dev.huai.models.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class UserServices {

@@ -6,7 +6,7 @@ import dev.huai.models.User;
 import dev.huai.models.UserRole;
 import dev.huai.services.AuthService;
 import dev.huai.services.RequestServices;
-import dev.huai.services.UserServices;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -39,20 +39,28 @@ public class PendingRequestServlet extends HttpServlet {
                 if(currentUser.getUserRole() == UserRole.EMPLOYEE){
                     resp.setStatus(200);
 
-                    try(PrintWriter pw = resp.getWriter();){
+                    try(PrintWriter pw = resp.getWriter()){
                         List<Request> pendingRequests = requestServices.getPendingRequestsByID(currentUser.getUser_id());
                         ObjectMapper om = new ObjectMapper();
                         String requestJson = om.writeValueAsString(pendingRequests);
                         pw.write(requestJson);
                         // write to response body
                     }
-                } else {
+                } else if(currentUser.getUserRole() == UserRole.MANAGER){
+                    resp.setStatus(200);
+
+                    try(PrintWriter pw = resp.getWriter()) {
+                        List<Request> pendingRequests = requestServices.getPendingRequestsByManager(currentUser.getUser_id());
+                        ObjectMapper om = new ObjectMapper();
+                        String requestJson = om.writeValueAsString(pendingRequests);
+                        pw.write(requestJson);
+                    }
+                }
+                else {
                     // if there is a valid token, but it's that of a general user rather than an admin, we could send back a 403
                     resp.sendError(403, "Invalid user role for current request");
                 }
             }
-
-
         }
     }
 }

@@ -1,10 +1,11 @@
 package dev.huai.models;
 
+import java.util.Objects;
+
 public class Request {
     private int request_id;
     private String description;
     private int user_id;
-    //private boolean status;
     private int status;
 
 
@@ -38,5 +39,18 @@ public class Request {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Request request = (Request) o;
+        return request_id == request.request_id && user_id == request.user_id && status == request.status && Objects.equals(description, request.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(request_id, description, user_id, status);
     }
 }

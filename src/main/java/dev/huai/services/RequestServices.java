@@ -2,10 +2,8 @@ package dev.huai.services;
 
 import dev.huai.daos.RequestDao;
 import dev.huai.daos.RequestDaoImpl;
-import dev.huai.daos.UserDao;
-import dev.huai.daos.UserDaoImpl;
 import dev.huai.models.Request;
-import dev.huai.models.User;
+
 
 import java.util.ArrayList;
 public class RequestServices {
@@ -31,7 +29,7 @@ public class RequestServices {
         return requestDao.denyRequestByID(request_id, user_id);
     }
 
-    public ArrayList<Request> getPendingRequestByManager(Integer user_id){
+    public ArrayList<Request> getPendingRequestsByManager(Integer user_id){
         return requestDao.getPendingRequestsByManager(user_id);
     }
 

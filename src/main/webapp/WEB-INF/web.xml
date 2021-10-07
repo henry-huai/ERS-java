@@ -28,14 +28,31 @@
         <servlet-name>ResolvedRequestServlet</servlet-name>
         <url-pattern>/resolved</url-pattern>
     </servlet-mapping>
-
     <servlet>
-        <servlet-name>NewRequestServlet</servlet-name>
-        <servlet-class>dev.huai.servlets.NewRequestServlet</servlet-class>
+        <servlet-name>RequestServlet</servlet-name>
+        <servlet-class>dev.huai.servlets.RequestServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>NewRequestServlet</servlet-name>
+        <servlet-name>RequestServlet</servlet-name>
         <url-pattern>/request</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UpdatingRequestServlet</servlet-name>
+        <servlet-class>dev.huai.servlets.UpdatingRequestServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdatingRequestServlet</servlet-name>
+        <url-pattern>/updatingrequest</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ViewUserServlet</servlet-name>
+        <servlet-class>dev.huai.servlets.ViewUserServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ViewUserServlet</servlet-name>
+        <url-pattern>/allemployees</url-pattern>
     </servlet-mapping>
 
 </web-app>
