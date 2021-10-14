@@ -161,7 +161,8 @@ public class UserDaoImpl implements UserDao {
                 String str1 = " password: " + password;
                 String str2 = " user id: " + id;
                 String result = str1 + str2;
-                emailService.sendEmail(employee.getEmail(), result);
+                String subject = "Log In Credential";
+                emailService.sendEmail(employee.getEmail(), result, subject);
             }
             //logger.info("New Employee has been added, email sent");
             return true;

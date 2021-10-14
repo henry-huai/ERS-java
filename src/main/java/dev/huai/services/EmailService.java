@@ -7,7 +7,7 @@ import java.util.Properties;
 
 public class EmailService {
 
-    public static void sendEmail(String recipient, String employee_message){
+    public static void sendEmail(String recipient, String employee_message, String subject){
 
 
         // Sender's email ID needs to be mentioned
@@ -42,7 +42,7 @@ public class EmailService {
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
 
             // Set Subject: header field
-            message.setSubject("Updates from Revature");
+            message.setSubject(subject);
 
             // Now set the actual message
             message.setText(employee_message);

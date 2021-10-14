@@ -240,7 +240,7 @@ public class RequestDaoImpl implements RequestDao{
             String str1 = "  Request description: " + request.getDescription();
             String str2 = "Your request has been approved. Request ID: "+request.getRequest_id();
             String message = str2 + str1;
-            emailService.sendEmail(user.getEmail(), message);
+            emailService.sendEmail(user.getEmail(), message, "Request Update");
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -264,7 +264,7 @@ public class RequestDaoImpl implements RequestDao{
             String str1 = "  Request description: " + request.getDescription();
             String str2 = "Your request has been denied. Request ID: "+request.getRequest_id();
             String message = str2 + str1;
-            emailService.sendEmail(user.getEmail(), message);
+            emailService.sendEmail(user.getEmail(), message, "Request Update");
 
             return true;
         } catch (SQLException e) {
