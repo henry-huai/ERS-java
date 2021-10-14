@@ -10,15 +10,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 public class UpdatingRequestServlet extends HttpServlet {
     private AuthService authService = new AuthService();
     private RequestServices requestServices = new RequestServices();
+    private final Logger logger = Logger.getLogger(String.valueOf(RequestServlet.class));
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String authToken = req.getHeader("Authorization");
-        System.out.println(authToken);
 
         boolean tokenIsValidFormat = authService.validateToken(authToken);
         if(!tokenIsValidFormat){

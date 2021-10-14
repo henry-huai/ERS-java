@@ -1,9 +1,11 @@
 package dev.huai.servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.huai.models.Request;
 import dev.huai.models.User;
 import dev.huai.models.UserRole;
 import dev.huai.services.AuthService;
+import dev.huai.services.RequestServices;
 import dev.huai.services.UserServices;
 
 import javax.servlet.ServletException;
@@ -15,15 +17,15 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.logging.Logger;
 
-public class ViewUserServlet extends HttpServlet {
+public class NewEmployeeServlet extends HttpServlet {
+
     private AuthService authService = new AuthService();
     private UserServices userServices = new UserServices();
     private final Logger logger = Logger.getLogger(String.valueOf(RequestServlet.class));
-
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String authToken = req.getHeader("Authorization");
-        System.out.println(authToken);
+        System.out.println("add new employee"+ authToken);
 
         boolean tokenIsValidFormat = authService.validateToken(authToken);
         if(!tokenIsValidFormat){
@@ -36,20 +38,22 @@ public class ViewUserServlet extends HttpServlet {
             } else {
                 // if there is a valid token and that token is for an admin, return list of users
                 if(currentUser.getUserRole() == UserRole.MANAGER){
-
-                    try(PrintWriter pw = resp.getWriter()){
-                        List<User> allEmployees = userServices.getAllEmployees();
-                        ObjectMapper om = new ObjectMapper();
-                        String requestJson = om.writeValueAsString(allEmployees);
-                        pw.write(requestJson);
+                    User newEmployee = new User();
+                    newEmployee.setFirstName(req.getParameter("firstName"));
+                    newEmployee.setLastName(req.getParameter("lastName"));
+                    newEmployee.setEmail(req.getParameter("email"));
+                    if(userServices.addNewEmployee(newEmployee)){
                         resp.setStatus(200);
+                        System.out.println("user has been added");
                     }
+
+                    else
+                        resp.setStatus(403);
                 } else {
                     // if there is a valid token, but it's that of a general user rather than an admin, we could send back a 403
-                    resp.sendError(403, "Invalid user role for current request");
+                    resp.setStatus(403);
                 }
             }
-
         }
     }
 }

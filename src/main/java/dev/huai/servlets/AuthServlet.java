@@ -1,7 +1,7 @@
 package dev.huai.servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dev.huai.models.Request;
+
 import dev.huai.models.User;
 import dev.huai.models.UserRole;
 import dev.huai.services.AuthService;
@@ -13,11 +13,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
+import java.util.logging.Logger;
+
 
 public class AuthServlet extends HttpServlet {
     private UserServices userServices = new UserServices();
     private AuthService authService = new AuthService();
+    private final Logger logger = Logger.getLogger(String.valueOf(RequestServlet.class));
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -28,9 +31,12 @@ public class AuthServlet extends HttpServlet {
 
         User user = userServices.getUserByCredentials(user_idParam, passwordParam);
         if(user == null){
+            resp.setStatus(403);
+            logger.info("Invalid login credential");
             resp.setHeader("Location", "http://localhost:8081/project1/static/login.html");
         } else {
             resp.setStatus(200);
+            logger.info("Log in successfully");
             String token = user.getUser_id() + ":" + user.getUserRole();
             if(user.getUserRole().equals(UserRole.MANAGER))
                 resp.setHeader("Location", "http://localhost:8081/project1/static/manager.html");
@@ -47,12 +53,12 @@ public class AuthServlet extends HttpServlet {
 
         boolean tokenIsValidFormat = authService.validateToken(authToken);
         if(!tokenIsValidFormat){
-            resp.sendError(400, "Improper token format; cannot fulfill your request");
+            resp.setStatus(400);
         } else {
             User currentUser = authService.getUserByToken(authToken); // return null if none found
 
             if (currentUser == null) {
-                resp.sendError(401, "Auth token invalid - no user");
+                resp.setStatus(401);
             } else {
                 // if there is a valid token and that token is for an admin, return list of users
                 resp.setStatus(200);

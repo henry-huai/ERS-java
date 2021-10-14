@@ -13,7 +13,9 @@ public interface RequestDao {
 
     public ArrayList<Request> getResolvedRequestsByManager(Integer user_id);
 
-    public boolean addRequest(Integer user_id, String description);
+    public boolean addRequest(Integer user_id, String description, String base64);
+
+    public Request getRequestByID(Integer request_id);
 
     public boolean approveRequestByID(Integer request_id, Integer user_id);
 

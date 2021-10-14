@@ -8,48 +8,85 @@
             Employee Page
         </title>
         <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  
-       
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">   
     </head>
+ 
 
     <body>
-        <div id="employee-header"></div>
-        <form>
-            <h3>Add a request</h3>
-            <label for="new-request-description">Request Description</label>
-            <input type="text" id="new-request-description"><br><br>
-            <button id="new-request-b">submit request</button>
-        </form>
-        <div style=" height: 500px !important;
-        overflow: scroll; ">
-        <table class="table table-striped">
-            <h3>Pending Requests Table</h3>
-            <thead>
-                <tr>
-                    <th scope="col">Resquest Description</th>
-                    <th scope="col">Status</th>
-                </tr> 
-            </thead>
-            <tbody id="pending-table-body">
-            </tbody>          
-        </table>
-    </div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">  
+            <a class="navbar-brand" id="employee-header" ></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+              <div class="navbar-nav">
+                <a class="nav-item nav-link active" href="http://localhost:8081/project1/static/emploee.html">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="http://localhost:8081/project1/static/profile-employee.html">My profile</a>
+                <a class="nav-item nav-link" onclick="logout()" href="http://localhost:8081/project1/static/login.html">Log out</a>
+              </div>
+            </div>
+          </nav>
+          <br><br>
+          
+        <div class="container">
+            <h4>New Request</h4>
+            <div class="card h-100">
+                <form>
+                    <br>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label for="new-request-description">Enter Request Description:</label>
+                            <input type="text" id="new-request-description" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label for="new-request-image">Upload image optional</label>
+                            <input type="file" accept=".jpeg, .png, .jpg" id="new-request-image" onchange="generateBase64()"/> 
+                            <button id="new-request-b" class="btn btn-dark" onclick="submitRequest(); return false;">submit request</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
         <br><br>
-        <div style=" height: 500px !important;
-        overflow: scroll;">
-        <table class="table table-striped">
-            <h3>Resolved Requests Table</h3>
-            <thead>
-                <tr>
-                    <th>Resquest Description</th>
-                    <th>Status</th>
-                </tr> 
-            </thead>
-            <tbody id="resolved-table-body">
-            </tbody>          
-        </table>
-    </div>
+        <div class="container">
+            <div style=" height: 500px !important; overflow: scroll; ">
+                <table class="table table-striped" id="pending-table">
+                    <h4>Pending Requests Table</h4>
+                    <thead>
+                        <tr>
+                            <th>Index</th>
+                            <th>Resquest Description</th>
+                            <th>Status</th>
+                            <th>Request ID</th>
+                            <th>Date</th>
+                            <th>Image</th>
+                        </tr> 
+                    </thead>
+                    <tbody id="pending-table-body">
+                    </tbody>          
+                </table>
+            </div>
+        </div>
+        <br><br>
+        <div class="container">
+            <div style=" height: 500px !important;overflow: scroll;">
+                <table class="table table-striped" id="resolved-table">
+                    <h4>Resolved Requests Table</h4>
+                    <thead>
+                        <tr>
+                            <th>Index</th>
+                            <th>Resquest Description</th>
+                            <th>Status</th>
+                            <th>Request ID</th>
+                        </tr> 
+                    </thead>
+                    <tbody id="resolved-table-body">
+                    </tbody>          
+                </table>
+            </div>
+        </div>
     </body>
     <script src="employee.js"></script>
 </html>

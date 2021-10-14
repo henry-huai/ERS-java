@@ -11,15 +11,32 @@
     </head>
 
     <body>
-        <div id="manager-header"></div>
+        
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">  
+            <a class="navbar-brand" id="manager-header" ></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+              <div class="navbar-nav">
+                <a class="nav-item nav-link active" href="http://localhost:8081/project1/static/manager.html">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="http://localhost:8081/project1/static/manager-employee.html">Employees</a>
+                <a class="nav-item nav-link" href="http://localhost:8081/project1/static/profile-manager.html">My profile</a>
+                <a class="nav-item nav-link" onclick="logout()" href="#">Log out</a>
+              </div>
+            </div>
+          </nav>
+          <br><br>
+          <div class="container">
         <div style=" height: 500px !important;overflow: scroll; " class="table-responsive">
             <table id="pending-table" class="table table-striped">
-                <h3>Pending Requests Table</h3>
+                <h4>Pending Requests Table</h4>
                 <thead>
                     <tr>
                         <th>Index</th>
                         <th>Resquest Description</th>
                         <th>Status</th>
+                        <th>Request ID</th>
                         <th>Employee ID</th>
                         <th>Action</th>
                     </tr> 
@@ -28,16 +45,19 @@
                 </tbody>          
             </table>
         </div>
+    </div>
         
         <br><br>
+        <div class="container">
         <div style=" height: 500px !important;overflow: scroll; " class="table-responsive">
-            <table class="table table-striped">
-                <h3>Resolved Requests Table</h3>
+            <table id="resolved-table" class="table table-striped">
+                <h4>Resolved Requests Table</h4>
                 <thead>
                     <tr>
                         <th>Index</th>
                         <th>Resquest Description</th>
                         <th>Status</th>
+                        <th>Request ID</th>
                         <th>Employee ID</th>
                         <th>Manager ID</th>
                     </tr> 
@@ -46,6 +66,7 @@
                 </tbody>          
             </table>
         </div>
+    </div>
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

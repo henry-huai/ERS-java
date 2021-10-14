@@ -54,5 +54,15 @@
         <servlet-name>ViewUserServlet</servlet-name>
         <url-pattern>/allemployees</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>NewEmployeeServlet</servlet-name>
+        <servlet-class>dev.huai.servlets.NewEmployeeServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>NewEmployeeServlet</servlet-name>
+        <url-pattern>/addemployee</url-pattern>
+    </servlet-mapping>
 
 </web-app>
+
+

@@ -25,5 +25,8 @@ public class UserServices {
         return userDao.getAllEmployees();
     }
 
+    public boolean addNewEmployee(User user){
+        return userDao.addNewEmployee(user);
+    }
 
 }

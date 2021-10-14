@@ -17,8 +17,14 @@ public class RequestServices {
         return requestDao.getResolvedRequestsByID(user_id);
     }
 
-    public boolean addRequest(Integer user_id, String description){
-        return requestDao.addRequest(user_id, description);
+    public Request getRequestByID(Integer request_id){
+        return requestDao.getRequestByID(request_id);
+    }
+
+    public boolean addRequest(Integer user_id, String description, String base64){
+        if(user_id == null || description == null || description.isEmpty())
+            return false;
+        return requestDao.addRequest(user_id, description, base64);
     }
 
     public boolean approveRequestByID(Integer request_id, Integer user_id){

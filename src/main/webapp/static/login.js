@@ -11,11 +11,17 @@ function attemptLogin(){
             'Content-Type': 'application/x-www-form-urlencoded' 
         },
         body:requestBody
-    }) 
+    })
+    //.then(response=>console.log(response.status))
     .then(response=>{
+      if(response.status===200){
         localStorage.setItem("token", response.headers.get('Authorization'));
         window.location.href=response.headers.get("Location");
-        })
+      }else{
+        window.alert("Invalid user credential");
+        location.reload();
+      }
+    })
       .catch((error) => {
         console.error('Error:', error);
       });

@@ -12,10 +12,11 @@ fetch("http://localhost:8081/project1/resolved",{
     let tableBody = document.getElementById("resolved-table-body");
     for(let request of data){
         let tableRow = document.createElement("tr");
+        let rowIndex = document.getElementById("resolved-table").rows.length;
         if(request.status > 0){
-            tableRow.innerHTML=`<td>${request.request_id}</td><td>${request.description}</td><td>Approved</td><td>${request.user_id}</td><td>${request.status}</td>`
+            tableRow.innerHTML=`<td>${rowIndex}</td><td>${request.description}</td><td>Approved</td><td>${request.request_id}</td><td>${request.user_id}</td><td>${request.status}</td>`
         }else{
-            tableRow.innerHTML=`<td>${request.request_id}</td><td>${request.description}</td><td>Denied</td><td>${request.user_id}</td><td>${-request.status}</td>`
+            tableRow.innerHTML=`<td>${rowIndex}</td><td>${request.description}</td><td>Denied</td><td>${request.request_id}</td><td>${request.user_id}</td><td>${-request.status}</td>`
         }
         tableBody.appendChild(tableRow);
     }
@@ -36,14 +37,14 @@ fetch("http://localhost:8081/project1/pending",{
         let tableRow = document.createElement("tr");
         //let rows = document.querySelectorAll('tr');
         let rowIndex = document.getElementById("pending-table").rows.length;
-        tableRow.innerHTML=`<td>${rowIndex}</td><td>${request.description}</td><td>Pending</td><td>${request.user_id}</td>
+        tableRow.innerHTML=`<td>${rowIndex}</td><td>${request.description}</td><td>Pending</td><td>${request.request_id}</td><td>${request.user_id}</td>
         <td><div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button id="action-b" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Action
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a  class="dropdown-item" onclick="sendAction('Approve');">Approve</a>
-          <a  class="dropdown-item" onclick="sendAction('Deny');">Deny</a>
+          <a  class="dropdown-item" onclick="sendAction('request_id=${request.request_id}&action_type=approve');">Approve</a>
+          <a  class="dropdown-item" onclick="sendAction('request_id=${request.request_id}&action_type=deny');">Deny</a>
         </div>
       </div></td>`
         tableBody.appendChild(tableRow);
@@ -66,20 +67,33 @@ fetch("http://localhost:8081/project1/login",{
 .then(data=>{
     console.log('Success:', data);
     let h = document.getElementById("manager-header");
-    h.innerHTML=`<h1>Welcome ${data.firstName}</h1>`    
+    h.innerHTML=`<h5>Welcome ${data.firstName}</h5>`    
 })
 
 
 
-// document.getElementById("dropdown-action").addEventListener("click", sendAction);
+//document.getElementById("action-b").addEventListener("click", sendAction);
 
-// function sendAction(action){
-//     const request_id = document.getElementById
-//     const requestBody = new URLSearchParams(`request_id=${userId}&password=${password}`);
+function sendAction(data){
+
+    const requestBody = new URLSearchParams(data);
 
 
-//     fetch("http://localhost:8081/project1/updatingrequest",{
+    fetch("http://localhost:8081/project1/updatingrequest",{
+        method:'POST',
+        headers:{
+            'Authorization': localStorage.getItem('token'), 
+            'Content-Type': 'application/x-www-form-urlencoded' 
+        },
+        body:requestBody
+    })
 
-//     })
+    location.reload();
+}
 
-// }
+function logout(){
+    localStorage.clear();
+    window.location.href="http://localhost:8081/project1/static/login.html";
+}
+
+

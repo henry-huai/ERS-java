@@ -13,4 +13,8 @@ public interface UserDao {
 
     public List<User> getAllEmployees();
 
+    public boolean addNewEmployee(User employee);
+
+
+
 }
