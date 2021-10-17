@@ -1,6 +1,6 @@
 //document.getElementById("new-request-b").addEventListener("click", submitRequest);
 
-fetch("http://localhost:8080/project1/resolved",{
+fetch("http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/resolved",{
     method: 'GET',
     headers:{
         'Authorization': localStorage.getItem('token')       
@@ -23,7 +23,7 @@ fetch("http://localhost:8080/project1/resolved",{
 });
 
 
-fetch("http://localhost:8080/project1/pending",{
+fetch("http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/pending",{
     method: 'GET',
     headers:{
         'Authorization': localStorage.getItem('token')       
@@ -45,7 +45,7 @@ fetch("http://localhost:8080/project1/pending",{
 
 
 
-fetch("http://localhost:8080/project1/login",{
+fetch("http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/login",{
     method: 'GET',
     headers:{
         'Authorization': localStorage.getItem('token')       
@@ -65,7 +65,7 @@ function submitRequest(){
     const requestDescription = document.getElementById("new-request-description").value;
     const requestBody = new URLSearchParams(`description=${requestDescription}&base64=${base64String}`);
 
-    fetch("http://localhost:8080/project1/request",{
+    fetch("http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/request",{
         method: 'POST',
         headers:{
             'Authorization': localStorage.getItem('token')
@@ -91,7 +91,7 @@ function submitRequest(){
 
 function logout(){
     localStorage.clear();
-    window.location.href="http://localhost:8080/project1/static/login.html";
+    window.location.href="http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/static/login.html";
 }
 
 function openImage() {
@@ -100,7 +100,7 @@ function openImage() {
     //window.alert($(this).closest("td").value);
     //const requestBody = new URLSearchParams(`request_id=1`);
 
-    fetch("http://localhost:8080/project1/request",{
+    fetch("http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/request",{
     method: 'GET',
     headers:{
         'Authorization': localStorage.getItem('token'),
@@ -161,7 +161,7 @@ reader.readAsDataURL(file);
 //     const requestDescription = document.getElementById("new-request-description").value;
 //     const requestBody = new URLSearchParams(`description=${requestDescription}`);
 
-//     fetch("http://localhost:8081/project1/request",{
+//     fetch("http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/request",{
 //         method: 'POST',
 //         headers:{
 //             'Authorization': localStorage.getItem('token')

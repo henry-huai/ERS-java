@@ -1,4 +1,4 @@
-fetch("http://localhost:8080/project1/login",{
+fetch("http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/login",{
     method: 'GET',
     headers:{
         'Authorization': localStorage.getItem('token')       
