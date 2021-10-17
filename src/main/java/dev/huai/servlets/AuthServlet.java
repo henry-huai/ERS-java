@@ -54,11 +54,14 @@ public class AuthServlet extends HttpServlet {
         boolean tokenIsValidFormat = authService.validateToken(authToken);
         if(!tokenIsValidFormat){
             resp.setStatus(400);
+            logger.info("Invalid token format");
         } else {
             User currentUser = authService.getUserByToken(authToken); // return null if none found
 
             if (currentUser == null) {
                 resp.setStatus(401);
+                logger.info("Auth token invalid - no user");
+
             } else {
                 // if there is a valid token and that token is for an admin, return list of users
                 resp.setStatus(200);
@@ -67,6 +70,39 @@ public class AuthServlet extends HttpServlet {
                     ObjectMapper om = new ObjectMapper();
                     String requestJson = om.writeValueAsString(user);
                     pw.write(requestJson);
+                    logger.info("User information returned");
+                    // write to response body
+                }
+            }
+        }
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String authToken = req.getHeader("Authorization");
+        String oldPassword = req.getParameter("oldPassword");
+        String newPassword = req.getParameter("newPassword");
+
+        boolean tokenIsValidFormat = authService.validateToken(authToken);
+        if(!tokenIsValidFormat){
+            resp.setStatus(400);
+            logger.info("Invalid token format");
+        } else {
+            User currentUser = authService.getUserByToken(authToken); // return null if none found
+
+            if (currentUser == null) {
+                resp.setStatus(401);
+                logger.info("Auth token invalid - no user");
+
+            } else {
+                // if there is a valid token and that token is for an admin, return list of users
+                resp.setStatus(200);
+                try (PrintWriter pw = resp.getWriter()) {
+                    User user = userServices.getUserByID(currentUser.getUser_id());
+                    ObjectMapper om = new ObjectMapper();
+                    String requestJson = om.writeValueAsString(user);
+                    pw.write(requestJson);
+                    logger.info("User information returned");
                     // write to response body
                 }
             }

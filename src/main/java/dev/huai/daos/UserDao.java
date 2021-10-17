@@ -15,6 +15,7 @@ public interface UserDao {
 
     public boolean addNewEmployee(User employee);
 
+    public boolean updatePassword(Integer user_id, String password, String newPassword);
 
 
 }

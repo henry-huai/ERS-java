@@ -29,4 +29,8 @@ public class UserServices {
         return userDao.addNewEmployee(user);
     }
 
+    public boolean updatePassword(Integer user_id, String password, String newPassword){
+        return userDao.updatePassword(user_id, password, newPassword);
+    }
+
 }

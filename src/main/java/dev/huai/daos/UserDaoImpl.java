@@ -21,7 +21,6 @@ import java.util.logging.Logger;
 public class UserDaoImpl implements UserDao {
     private ConnectionService connectionService = new ConnectionService();
     private EmailService emailService = new EmailService();
-    //private final Logger logger = Logger.getLogger(String.valueOf(UserDaoImpl.class));
 
     @Override
     public User getUserByCredential(Integer user_id, String password) {
@@ -40,6 +39,11 @@ public class UserDaoImpl implements UserDao {
     @Override
     public boolean addNewEmployee(User employee) {
         return addNewEmployeeBySQL(employee);
+    }
+
+    @Override
+    public boolean updatePassword(Integer user_id, String password, String newPassword){
+        return updatePasswordBySQL(user_id, password, newPassword);
     }
 
 
@@ -71,15 +75,12 @@ public class UserDaoImpl implements UserDao {
                     }
                     else
                         user.setUserRole(UserRole.EMPLOYEE);
-                    //logger.info("User found from database");
                 }
                 else{
-                    //logger.info("Password doesn't match the user ID");
                     return null;
                 }
             }
             else{
-                //logger.info("User ID not found in database");
                 return null;
             }
         } catch (SQLException e) {
@@ -109,8 +110,6 @@ public class UserDaoImpl implements UserDao {
                 }
                 else
                     user.setUserRole(UserRole.EMPLOYEE);
-                //logger.info("User found from database");
-
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -139,7 +138,6 @@ public class UserDaoImpl implements UserDao {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        //logger.info("Employees returned from database");
         return allEmployees;
 
     }
@@ -164,13 +162,11 @@ public class UserDaoImpl implements UserDao {
                 String subject = "Log In Credential";
                 emailService.sendEmail(employee.getEmail(), result, subject);
             }
-            //logger.info("New Employee has been added, email sent");
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
-
     }
 
     private static char[] generatePassword(int length) {
@@ -191,6 +187,25 @@ public class UserDaoImpl implements UserDao {
             password[i] = combinedChars.charAt(random.nextInt(combinedChars.length()));
         }
         return password;
+    }
+
+    private boolean updatePasswordBySQL(Integer user_id, String password, String newPassword){
+        if(getUserByCredential(user_id,password)!=null){
+            String sql = "update user set pass_word = ? where user_id = ?";
+
+            try{
+                Connection c = connectionService.establishConnection();
+                PreparedStatement stmt = c.prepareStatement(sql);
+                stmt.setInt(1,user_id);
+                stmt.setString(2,newPassword);
+                stmt.execute();
+                return true;
+            }catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+
+        }
+        return false;
     }
 
 }

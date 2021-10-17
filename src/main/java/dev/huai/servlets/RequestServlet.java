@@ -59,9 +59,7 @@ public class RequestServlet extends HttpServlet {
                     resp.setStatus(403);
                     logger.info("Token doesn't have priority level");
                 }
-
             }
-
         }
     }
 
