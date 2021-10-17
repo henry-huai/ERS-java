@@ -1,4 +1,4 @@
-fetch("http://localhost:8081/project1/allemployees",{
+fetch("http://localhost:8080/project1/allemployees",{
     method: 'GET',
     headers:{
         'Authorization': localStorage.getItem('token')       
@@ -25,7 +25,7 @@ function addNewEmployee(e){
     const email = document.getElementById("email").value;
     const requestBody = new URLSearchParams(`firstName=${firstName}&lastName=${lastName}&email=${email}`);
     
-    fetch("http://localhost:8081/project1/addemployee",{
+    fetch("http://localhost:8080/project1/addemployee",{
         method: 'POST',
         headers:{
             'Authorization': localStorage.getItem('token'), 

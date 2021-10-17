@@ -5,7 +5,7 @@ function attemptLogin(){
     const password = document.getElementById("password").value;  
     const requestBody = new URLSearchParams(`user_id=${userId}&password=${password}`);
     
-    fetch("http://localhost:8081/project1/login",{
+    fetch("http://localhost:8080/project1/login",{
         method: 'POST',
         header:{
             'Content-Type': 'application/x-www-form-urlencoded' 
