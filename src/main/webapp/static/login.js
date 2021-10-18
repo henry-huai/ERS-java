@@ -5,7 +5,7 @@ function attemptLogin(){
     const password = document.getElementById("password").value;  
     const requestBody = new URLSearchParams(`user_id=${userId}&password=${password}`);
     
-    fetch("http://localhost:8080/project1/login",{
+    fetch("http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/login",{
         method: 'POST',
         header:{
             'Content-Type': 'application/x-www-form-urlencoded' 
@@ -40,10 +40,10 @@ function attemptLogin(){
 
 //     console.log(`user_id: ${user_id}, password: ${password}`); // this is a template literal
 
-//     // use XMLHttpRequest to create an http request - POST to http://localhost:8082/auth-demo/login
+//     // use XMLHttpRequest to create an http request - POST to http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8082/auth-demo/login
 //                                                     // + request body with credentials
 //     const xhr = new XMLHttpRequest();
-//     xhr.open("POST", "http://localhost:8080/project1/login");
+//     xhr.open("POST", "http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/login");
 
 //     // define onreadystatechange callback for the xhr object (check for readystate 4)
 //     xhr.onreadystatechange = function(){
@@ -59,7 +59,7 @@ function attemptLogin(){
 //                 const token = xhr.getResponseHeader("Authorization");
 //                 console.log(token); //"2:ADMIN"
 //                 localStorage.setItem("token", token);
-//                 window.location.href="http://localhost:8085/bankapp/static/user.html";
+//                 window.location.href="http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8085/bankapp/static/user.html";
 //             } else {
 //                 console.log(xhr.status);
 //                 //errorDiv.hidden = false; 

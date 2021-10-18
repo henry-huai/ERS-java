@@ -1,6 +1,6 @@
 
 
-fetch("http://localhost:8080/project1/resolved",{
+fetch("http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/resolved",{
     method: 'GET',
     headers:{
         'Authorization': localStorage.getItem('token')       
@@ -23,7 +23,7 @@ fetch("http://localhost:8080/project1/resolved",{
 })
 
 
-fetch("http://localhost:8080/project1/pending",{
+fetch("http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/pending",{
     method: 'GET',
     headers:{
         'Authorization': localStorage.getItem('token')       
@@ -57,7 +57,7 @@ fetch("http://localhost:8080/project1/pending",{
 
 
 
-fetch("http://localhost:8080/project1/login",{
+fetch("http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/login",{
     method: 'GET',
     headers:{
         'Authorization': localStorage.getItem('token')       
@@ -79,7 +79,7 @@ function sendAction(data){
     const requestBody = new URLSearchParams(data);
 
 
-    fetch("http://localhost:8080/project1/updatingrequest",{
+    fetch("http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/updatingrequest",{
         method:'POST',
         headers:{
             'Authorization': localStorage.getItem('token'), 
@@ -93,7 +93,7 @@ function sendAction(data){
 
 function logout(){
     localStorage.clear();
-    window.location.href="http://localhost:8080/project1/static/login.html";
+    window.location.href="http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/static/login.html";
 }
 
 

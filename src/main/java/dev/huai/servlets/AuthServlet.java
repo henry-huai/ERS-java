@@ -33,15 +33,15 @@ public class AuthServlet extends HttpServlet {
         if(user == null){
             resp.setStatus(403);
             logger.info("Invalid login credential");
-            resp.setHeader("Location", "http://localhost:8080/project1/static/login.html");
+            resp.setHeader("Location", "http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/static/login.html");
         } else {
             resp.setStatus(200);
             logger.info("Log in successfully");
             String token = user.getUser_id() + ":" + user.getUserRole();
             if(user.getUserRole().equals(UserRole.MANAGER))
-                resp.setHeader("Location", "http://localhost:8080/project1/static/manager.html");
+                resp.setHeader("Location", "http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/static/manager.html");
             else
-                resp.setHeader("Location", "http://localhost:8080/project1/static/employee.html");
+                resp.setHeader("Location", "http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/static/employee.html");
             resp.setHeader("Authorization", token);
         }
     }
