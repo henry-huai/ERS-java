@@ -13,7 +13,7 @@ public class ConnectionService {
 
             String url = "jdbc:postgresql://project1-db.cus4q5cij5bd.us-east-2.rds.amazonaws.com:5432/postgres";
             String username = "postgres";
-            String password = "7499";
+            String password = "project1db";
 
 
 //            String url = System.getenv("Project1DB_URL");
