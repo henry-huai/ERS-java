@@ -21,10 +21,10 @@ public class RequestServices {
         return requestDao.getRequestByID(request_id);
     }
 
-    public boolean addRequest(Integer user_id, String description, String base64){
+    public boolean addRequest(Integer user_id, String description,String category){
         if(user_id == null || description == null || description.isEmpty())
             return false;
-        return requestDao.addRequest(user_id, description, base64);
+        return requestDao.addRequest(user_id, description,category);
     }
 
     public boolean approveRequestByID(Integer request_id, Integer user_id){
@@ -41,5 +41,13 @@ public class RequestServices {
 
     public ArrayList<Request> getResolvedRequestsByManager(Integer user_id){
         return requestDao.getResolvedRequestsByManager(user_id);
+    }
+
+    public int getNumberOfPendRequestByCategory(String category){
+        return requestDao.getNumberOfPendRequestByCategory(category);
+    }
+
+    public ArrayList<Integer> getNumberOfResolveRequestByCategory(){
+        return requestDao.getNumberOfResolveRequestByCategory();
     }
 }

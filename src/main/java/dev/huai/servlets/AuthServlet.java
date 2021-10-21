@@ -33,6 +33,7 @@ public class AuthServlet extends HttpServlet {
         if(user == null){
             resp.setStatus(403);
             logger.info("Invalid login credential");
+            //ec2-3-144-234-17.us-east-2.compute.amazonaws.com
             resp.setHeader("Location", "http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/static/login.html");
         } else {
             resp.setStatus(200);
@@ -80,8 +81,9 @@ public class AuthServlet extends HttpServlet {
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String authToken = req.getHeader("Authorization");
-        String oldPassword = req.getParameter("oldPassword");
-        String newPassword = req.getParameter("newPassword");
+        String oldPassword = req.getHeader("oldPassword");
+        String newPassword = req.getHeader("newPassword");
+        System.out.println(authToken+" " + oldPassword+ " " + newPassword);
 
         boolean tokenIsValidFormat = authService.validateToken(authToken);
         if(!tokenIsValidFormat){
@@ -89,21 +91,17 @@ public class AuthServlet extends HttpServlet {
             logger.info("Invalid token format");
         } else {
             User currentUser = authService.getUserByToken(authToken); // return null if none found
-
             if (currentUser == null) {
                 resp.setStatus(401);
                 logger.info("Auth token invalid - no user");
-
             } else {
-                // if there is a valid token and that token is for an admin, return list of users
-                resp.setStatus(200);
-                try (PrintWriter pw = resp.getWriter()) {
-                    User user = userServices.getUserByID(currentUser.getUser_id());
-                    ObjectMapper om = new ObjectMapper();
-                    String requestJson = om.writeValueAsString(user);
-                    pw.write(requestJson);
-                    logger.info("User information returned");
-                    // write to response body
+                if(userServices.updatePassword(currentUser.getUser_id(),oldPassword,newPassword )){
+                    resp.setStatus(200);
+                    logger.info("User password updated");
+                }
+                else{
+                    resp.setStatus(403);
+                    logger.info("User password invalid");
                 }
             }
         }

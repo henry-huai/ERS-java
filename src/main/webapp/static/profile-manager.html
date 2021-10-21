@@ -22,10 +22,11 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
               <div class="navbar-nav">
-                <a class="nav-item nav-link active" href="http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8081/project1/static/manager.html">Home <span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" href="http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8081/project1/static/manager-employee.html">Employees</a>
-                <a class="nav-item nav-link" href="http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8081/project1/static/profile-manager.html">My profile</a>
-                <a class="nav-item nav-link" onclick="logout()" href="http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8081/project1/static/login.html">Log out</a>
+                <a class="nav-item nav-link" href="http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/static/manager.html">Home</a>
+                <a class="nav-item nav-link" href="http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/static/manager-employee.html">Employees</a>
+                <a class="nav-item nav-link active" href="http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/static/profile-manager.html">My profile</a>
+                <a class="nav-item nav-link" href="http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/static/request-chart.html">Requests analysis</a>
+                <a class="nav-item nav-link" onclick="logout()" href="http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/static/login.html">Log out</a>
               </div>
             </div>
           </nav>
@@ -61,7 +62,22 @@
                     </div>
                 </div>
             </div>
-        </div>       
+        </div>
+        <br><br>
+        <div class="container" >
+            <h4>Reset password</h4>
+            <form>
+                <div class="form-group">
+                  <label for="oldPassword">Current Password</label>
+                  <input type="password" class="form-control" id="oldPassword" style="width: 250px;">
+                  <label for="newPassword">New Password</label>
+                  <input type="password" class="form-control" id="newPassword" style="width: 250px;">
+                  <label for="newPassword1">Renter New Password</label>
+                  <input type="password" class="form-control" id="newPassword1" style="width: 250px;">
+                </div>
+                <button type="submit" class="btn btn-dark" id="reset-password-b">Submit</button>
+            </form>
+        </div>      
     </body>
     <script src="profile.js"></script>
 </html>

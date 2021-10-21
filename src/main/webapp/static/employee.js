@@ -1,4 +1,6 @@
 //document.getElementById("new-request-b").addEventListener("click", submitRequest);
+//onclick="generateBase64(); return false;"
+
 
 fetch("http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/resolved",{
     method: 'GET',
@@ -58,12 +60,18 @@ fetch("http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/log
     h.innerHTML=`<h5>Welcome employee ${data.firstName}</h5>`    
 });
 
+let category = "";
+function updateCategory() {
+    var select = document.getElementById('categories');
+    category = select.options[select.selectedIndex].value;
+}
+
 
 
 function submitRequest(){  
 
     const requestDescription = document.getElementById("new-request-description").value;
-    const requestBody = new URLSearchParams(`description=${requestDescription}&base64=${base64String}`);
+    const requestBody = new URLSearchParams(`description=${requestDescription}&base64=${base64String}&category=${category}`);
 
     fetch("http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/request",{
         method: 'POST',
@@ -96,37 +104,21 @@ function logout(){
 
 function openImage() {
 
-    //var request_id = $(this).closest("td").value;
-    //window.alert($(this).closest("td").value);
-    //const requestBody = new URLSearchParams(`request_id=1`);
+    // var request_id = $(this).closest("td").value;
+    // window.alert(request_id);
+
 
     fetch("http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/request",{
     method: 'GET',
     headers:{
         'Authorization': localStorage.getItem('token'),
-        'Request':'1'       
+        'Request':'3'       
     },
     //body:requestBody
 })
 .then(response => response.json())
 .then(data=>{
-    //console.log('Success:', data);
-    // var image = new Image();
-    // //console.log("data:image/jpg;base64, "+ request.base64encodedString);
-    
-   
-    // console.log(image.src);
 
-    // var w = window.open('about:blank');
-    // w.document.write(image.outerHTML);
-
-    var img = document.createElement("img");
-// added `width` , `height` properties to `img` attributes
-img.width = "250px";
-img.height = "250px";
-img.src = "data:image/png;base64," + data;
-var preview = document.getElementById("image-div");
-preview.appendChild(img);
 });
 
     
@@ -144,17 +136,11 @@ var reader = new FileReader();
 reader.onload = function transfer() {
     base64String = reader.result.replace("data:", "")
         .replace(/^.+,/, "");
-
 }
 reader.readAsDataURL(file);
-
 }
 
 
-
-
-
-  
 
 
 // function submitRequest(){  

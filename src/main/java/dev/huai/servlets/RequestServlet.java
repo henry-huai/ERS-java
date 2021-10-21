@@ -46,8 +46,9 @@ public class RequestServlet extends HttpServlet {
                     request.setDescription(req.getParameter("description"));
                     request.setUser_id(currentUser.getUser_id());
                     request.setBase64encodedString(req.getParameter("base64"));
+                    request.setCategory(req.getParameter("category"));
                     System.out.println(request.toString());
-                    Boolean result = requestServices.addRequest(request.getUser_id(), request.getDescription(), request.getBase64encodedString());
+                    Boolean result = requestServices.addRequest(request.getUser_id(), request.getDescription(),request.getCategory());
                     if (result == true) {
                         resp.setStatus(200);
                         logger.info("Adding request successfully");
@@ -81,7 +82,9 @@ public class RequestServlet extends HttpServlet {
             } else {
                 int request_id = Integer.parseInt(req.getHeader("Request"));
                 //int request_id = Integer.parseInt(req.getParameter("request_id"));
+                System.out.println("request id is " + request_id);
                 Request request = requestServices.getRequestByID(request_id);
+                System.out.println(request.getUser_id()+"  "+ currentUser.getUser_id());
                 if(request.getUser_id()== currentUser.getUser_id() || currentUser.getUserRole()==UserRole.MANAGER){
                     try(PrintWriter pw = resp.getWriter()){
                         ObjectMapper om = new ObjectMapper();
@@ -90,10 +93,12 @@ public class RequestServlet extends HttpServlet {
                         pw.write(requestJson);
                     }
                     resp.setStatus(200);
+                    logger.info("Base64 returned");
                 }
-                else
-                    // user token doesn't have authorization
+                else {
                     resp.setStatus(401);
+                    logger.info("Invalid token");
+                }
             }
         }
     }

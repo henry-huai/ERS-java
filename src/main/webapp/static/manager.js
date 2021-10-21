@@ -38,7 +38,8 @@ fetch("http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/pen
         //let rows = document.querySelectorAll('tr');
         let rowIndex = document.getElementById("pending-table").rows.length;
         tableRow.innerHTML=`<td>${rowIndex}</td><td>${request.description}</td><td>Pending</td><td>${request.request_id}</td><td>${request.user_id}</td>
-        <td><div class="dropdown">
+        <td>
+        <div class="dropdown">
         <button id="action-b" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Action
         </button>
@@ -46,7 +47,7 @@ fetch("http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/pen
           <a  class="dropdown-item" onclick="sendAction('request_id=${request.request_id}&action_type=approve');">Approve</a>
           <a  class="dropdown-item" onclick="sendAction('request_id=${request.request_id}&action_type=deny');">Deny</a>
         </div>
-      </div></td>`
+        </div></td>`
         tableBody.appendChild(tableRow);
         // let z = document.createElement("td");
         // z.innerHTML = `<td style="visibility:hidden;">${tableRow.rowIndex}</td>`;

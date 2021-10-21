@@ -13,11 +13,15 @@ public interface RequestDao {
 
     public ArrayList<Request> getResolvedRequestsByManager(Integer user_id);
 
-    public boolean addRequest(Integer user_id, String description, String base64);
+    public boolean addRequest(Integer user_id, String description, String category);
 
     public Request getRequestByID(Integer request_id);
 
     public boolean approveRequestByID(Integer request_id, Integer user_id);
 
     public boolean denyRequestByID(Integer request_id, Integer user_id);
+
+    public int getNumberOfPendRequestByCategory(String category);
+
+    public ArrayList<Integer> getNumberOfResolveRequestByCategory();
 }

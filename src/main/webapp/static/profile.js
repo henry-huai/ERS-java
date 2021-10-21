@@ -17,4 +17,37 @@ fetch("http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/log
     p.innerHTML=`<p >Position: ${data.userRole}</p>`    
 });
 
+
+document.getElementById("reset-password-b").addEventListener("click", resetPassword);
+
+function resetPassword(e){
+    e.preventDefault();
+    const firstInput = document.getElementById("newPassword").value;
+    const secondInput = document.getElementById("newPassword1").value;
+
+    if (firstInput === secondInput) {
+        const oldPassword = document.getElementById("oldPassword").value;
+        fetch("http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/login",{
+            method: 'PUT',
+            headers:{
+                'Authorization': localStorage.getItem('token'),
+                'oldPassword':oldPassword,
+                'newPassword':firstInput
+            },
+        })
+        .then(response =>{
+            if(response.status===200){
+                window.alert("Password has been changed");
+                location.reload();
+            }else{
+                window.alert("Wrong current password");
+                location.reload();
+            }
+        })
+    } else {
+        window.alert("New password doesn't match");
+        location.reload();
+    } 
+}
+
  

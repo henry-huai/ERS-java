@@ -44,8 +44,8 @@ public class RequestDaoImpl implements RequestDao{
     }
 
     @Override
-    public boolean addRequest(Integer user_id, String description, String base64) {
-        return addRequestBySQL(user_id, description, base64);
+    public boolean addRequest(Integer user_id, String description, String category) {
+        return addRequestBySQL(user_id, description, category);
     }
 
     @Override
@@ -61,6 +61,16 @@ public class RequestDaoImpl implements RequestDao{
     @Override
     public boolean denyRequestByID(Integer request_id, Integer user_id) {
         return denyRequestByIDBySQL(request_id, user_id);
+    }
+
+    @Override
+    public int getNumberOfPendRequestByCategory(String category){
+        return getNumberOfPendingRequestByCategory(category);
+    }
+
+    @Override
+    public ArrayList<Integer> getNumberOfResolveRequestByCategory(){
+        return getNumberOfResolvedRequestByCategory();
     }
 
 
@@ -81,7 +91,8 @@ public class RequestDaoImpl implements RequestDao{
                 request.setUser_id(rs.getInt("user_id"));
                 request.setDescription(rs.getString("description"));
                 request.setStatus(rs.getInt("status"));
-                request.setBase64encodedString((rs.getString("image")));
+                request.setCategory(rs.getString("category"));
+                //request.setBase64encodedString((rs.getString("image")));
                 request.setTransaction_date(rs.getString("transaction_date"));
                 pendingRequests.add(request);
             }
@@ -111,7 +122,8 @@ public class RequestDaoImpl implements RequestDao{
                 request.setUser_id(rs.getInt("user_id"));
                 request.setDescription(rs.getString("description"));
                 request.setStatus(rs.getInt("status"));
-                request.setBase64encodedString((rs.getString("image")));
+                request.setCategory(rs.getString("category"));
+                //request.setBase64encodedString((rs.getString("image")));
                 request.setTransaction_date(rs.getString("transaction_date"));
                 resolvedRequests.add(request);
             }
@@ -123,15 +135,15 @@ public class RequestDaoImpl implements RequestDao{
         return resolvedRequests;
     }
 
-    private boolean addRequestBySQL(Integer user_id, String description, String base64){
-        String sql = "insert into requests (user_id, description, image) values(?, ?, ?)";
+    private boolean addRequestBySQL(Integer user_id, String description, String category){
+        String sql = "insert into requests (user_id, description, category) values(?, ?, ?)";
 
         try{
             Connection c = connectionService.establishConnection();
             PreparedStatement stmt = c.prepareStatement(sql);
             stmt.setInt(1, user_id);
             stmt.setString(2, description);
-            stmt.setString(3,base64);
+            stmt.setString(3,category);
             stmt.execute();
             //logger.info("New request is added to database");
             return true;
@@ -156,7 +168,8 @@ public class RequestDaoImpl implements RequestDao{
                 request.setRequest_id(rs.getInt("request_id"));
                 request.setUser_id(rs.getInt("user_id"));
                 request.setDescription(rs.getString("description"));
-                request.setBase64encodedString(rs.getString("image"));
+                request.setCategory(rs.getString("category"));
+                //request.setBase64encodedString(rs.getString("image"));
                 request.setTransaction_date(rs.getString("transaction_date"));
                 request.setStatus(0);
                 return request;
@@ -184,7 +197,8 @@ public class RequestDaoImpl implements RequestDao{
                 request.setRequest_id(rs.getInt("request_id"));
                 request.setUser_id(rs.getInt("user_id"));
                 request.setDescription(rs.getString("description"));
-                request.setBase64encodedString(rs.getString("image"));
+                request.setCategory(rs.getString("category"));
+                //request.setBase64encodedString(rs.getString("image"));
                 request.setTransaction_date(rs.getString("transaction_date"));
                 request.setStatus(0);
                 pendingRequests.add(request);
@@ -213,7 +227,8 @@ public class RequestDaoImpl implements RequestDao{
                 request.setUser_id(rs.getInt("user_id"));
                 request.setDescription(rs.getString("description"));
                 request.setStatus(rs.getInt("status"));
-                request.setBase64encodedString(rs.getString("image"));
+                request.setCategory(rs.getString("category"));
+                //request.setBase64encodedString(rs.getString("image"));
                 request.setTransaction_date(rs.getString("transaction_date"));
                 resolvedRequests.add(request);
             }
@@ -272,6 +287,77 @@ public class RequestDaoImpl implements RequestDao{
         }
         //logger.info("Deny request status failed");
         return false;
+    }
+
+    private int getNumberOfPendingRequestByCategory(String category){
+        String sql = " select * from requests where status = 0 and category = ?";
+
+        try {
+            int count = 0;
+            Connection c = connectionService.establishConnection();
+            PreparedStatement stmt = c.prepareStatement(sql);
+            stmt.setString(1,category);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                count++;
+            }
+            return count;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    private int getNumberOfApprovedRequestByCategory(String category){
+        String sql = " select * from requests where status > 0 and category = ?";
+
+        try {
+            int count = 0;
+            Connection c = connectionService.establishConnection();
+            PreparedStatement stmt = c.prepareStatement(sql);
+            stmt.setString(1,category);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                count++;
+            }
+            return count;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    private int getNumberOfDeniedRequestByCategory(String category){
+        String sql = " select * from requests where status < 0 and category = ?";
+
+        try {
+            int count = 0;
+            Connection c = connectionService.establishConnection();
+            PreparedStatement stmt = c.prepareStatement(sql);
+            stmt.setString(1,category);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                count++;
+            }
+            return count;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    private ArrayList<Integer> getNumberOfResolvedRequestByCategory(){
+        ArrayList<Integer> resultArr = new ArrayList<>();
+        resultArr.add(getNumberOfApprovedRequestByCategory("BUSINESS"));
+        resultArr.add(getNumberOfDeniedRequestByCategory("BUSINESS"));
+        resultArr.add(getNumberOfApprovedRequestByCategory("TRAVEL"));
+        resultArr.add(getNumberOfDeniedRequestByCategory("TRAVEL"));
+        resultArr.add(getNumberOfApprovedRequestByCategory("FOOD"));
+        resultArr.add(getNumberOfDeniedRequestByCategory("FOOD"));
+        resultArr.add(getNumberOfApprovedRequestByCategory("MEDICAL"));
+        resultArr.add(getNumberOfDeniedRequestByCategory("MEDICAL"));
+        return resultArr;
     }
 
 

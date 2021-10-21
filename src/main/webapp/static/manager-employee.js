@@ -19,31 +19,31 @@ fetch("http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/all
 document.getElementById("add-employee-b").addEventListener("click", addNewEmployee);
 
 function addNewEmployee(e){
+
   e.preventDefault();
-    const firstName = document.getElementById("firstName").value;
-    const lastName = document.getElementById("lastName").value;
-    const email = document.getElementById("email").value;
-    const requestBody = new URLSearchParams(`firstName=${firstName}&lastName=${lastName}&email=${email}`);
-    
-    fetch("http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/addemployee",{
-        method: 'POST',
-        headers:{
-            'Authorization': localStorage.getItem('token'), 
-            'Content-Type': 'application/x-www-form-urlencoded'  
-        },
-        body:requestBody
-    })
-    //.then(response=>console.log(response.status))
-    .then(response=>{
-      if(response.status==200){
-        window.alert("New Employee added")
-        location.reload();
-      }else{
-        window.alert("Invalid user credential");
-        location.reload();
-      }
-    })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+  const firstName = document.getElementById("firstName").value;
+  const lastName = document.getElementById("lastName").value;
+  const email = document.getElementById("email").value;
+  const requestBody = new URLSearchParams(`firstName=${firstName}&lastName=${lastName}&email=${email}`);
+  
+  fetch("http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/addemployee",{
+      method: 'POST',
+      headers:{
+          'Authorization': localStorage.getItem('token'), 
+          'Content-Type': 'application/x-www-form-urlencoded'  
+      },
+      body:requestBody
+  })
+  .then(response=>{
+    if(response.status==200){
+      window.alert("New Employee added")
+      location.reload();
+    }else{
+      window.alert("Invalid user credential")
+      location.reload();
+    }
+  })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
 }

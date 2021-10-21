@@ -62,6 +62,22 @@
         <servlet-name>NewEmployeeServlet</servlet-name>
         <url-pattern>/addemployee</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>PendingRequestAnalyzeServlet</servlet-name>
+        <servlet-class>dev.huai.servlets.AnalyzePendingRequestServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PendingRequestAnalyzeServlet</servlet-name>
+        <url-pattern>/pending-request-analyze</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ResolvedRequestAnalyzeServlet</servlet-name>
+        <servlet-class>dev.huai.servlets.AnalyzeResolvedRequestServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ResolvedRequestAnalyzeServlet</servlet-name>
+        <url-pattern>/resolved-request-analyze</url-pattern>
+    </servlet-mapping>
 
 </web-app>
 

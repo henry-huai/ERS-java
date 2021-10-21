@@ -191,13 +191,13 @@ public class UserDaoImpl implements UserDao {
 
     private boolean updatePasswordBySQL(Integer user_id, String password, String newPassword){
         if(getUserByCredential(user_id,password)!=null){
-            String sql = "update user set pass_word = ? where user_id = ?";
+            String sql = "update users set pass_word = ? where user_id = ?";
 
             try{
                 Connection c = connectionService.establishConnection();
                 PreparedStatement stmt = c.prepareStatement(sql);
-                stmt.setInt(1,user_id);
-                stmt.setString(2,newPassword);
+                stmt.setString(1,newPassword);
+                stmt.setInt(2,user_id);
                 stmt.execute();
                 return true;
             }catch (SQLException throwables) {

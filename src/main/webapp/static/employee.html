@@ -20,7 +20,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
               <div class="navbar-nav">
-                <a class="nav-item nav-link active" href="http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/static/emploee.html">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link active" href="http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/static/employee.html">Home</a>
                 <a class="nav-item nav-link" href="http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/static/profile-employee.html">My profile</a>
                 <a class="nav-item nav-link" onclick="logout()" href="http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/static/login.html">Log out</a>
               </div>
@@ -37,13 +37,23 @@
                         <div class="form-group">
                             <label for="new-request-description">Enter Request Description:</label>
                             <input type="text" id="new-request-description" class="form-control">
+                            <label for="new-request-category">Select Request Category:</label>
+                            <select id="categories" class="form-control" onChange="updateCategory()">
+                                <option value="BUSINESS">(Default) Business Expense</option>
+                                <option value="FOOD">Food Expense</option>
+                                <option value="TRAVEL">Travel Expense</option>
+                                <option value="MEDICAL">Medical Expense</option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                         <div class="form-group">
                             <label for="new-request-image">Upload image optional</label>
-                            <input type="file" accept=".jpeg, .png, .jpg" id="new-request-image" onchange="generateBase64()"/> 
+                            <input type="file" accept=".jpeg, .png, .jpg" id="new-request-image" onclick="generateBase64()"/> 
+
+                         
                             <button id="new-request-b" class="btn btn-dark" onclick="submitRequest(); return false;">submit request</button>
+                          
                         </div>
                     </div>
                 </form>
