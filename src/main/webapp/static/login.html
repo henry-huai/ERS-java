@@ -4,14 +4,31 @@
         <title>
             Login Page
         </title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">   
     </head>
     <body>
-        
-        <label for="user_id">User ID</label>
-        <input type="text" id="user_id"><br><br>
-        <label for="password">Password</label>
-        <input type="password" id="password"><br><br>
-        <button id="login-b">Log in</button>
+        <br><br>
+        <div class="col d-flex justify-content-center">
+            <div class="card" style="width: 18rem;" >
+                <div class="card-header">
+                    Welcome!
+                  </div>
+                <div class="card-body">
+                <form >
+                    <div class="form-group">
+                        <label for="user_id">User ID</label>
+                        <input type="text" id="user_id" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" class="form-control">
+                    </div>
+                    <br><br>
+                    <button id="login-b" class="btn btn-dark">Log in</button>
+                </form>
+            </div>
+            </div>
+        </div>
     </body>
     <script src="login.js"></script>
 </html>

@@ -44,13 +44,11 @@ public class AnalyzeResolvedRequestServlet extends HttpServlet {
                         ObjectMapper om = new ObjectMapper();
                         String requestJson = om.writeValueAsString(arr);
                         pw.write(requestJson);
-                        // write to response body
                     }
                     resp.setStatus(200);
                 }
                 else
                     resp.setStatus(403);
-                //No authorization
             }
         }
     }
