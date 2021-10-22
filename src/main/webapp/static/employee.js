@@ -83,7 +83,7 @@ function submitRequest(){
     .then(response=>{   
         console.log(response.status);
         if(response.status === 200){
-            
+            window.alert("New request has submitted")
             location.reload();
         }else if(response.status === 403){
             window.alert("empty request here")    
