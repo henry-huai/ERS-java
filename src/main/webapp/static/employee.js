@@ -16,9 +16,9 @@ fetch("http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/res
         let tableRow = document.createElement("tr");
         let rowIndex = document.getElementById("resolved-table").rows.length;
         if(request.status > 0){
-            tableRow.innerHTML=`<td>${rowIndex}</td><td>${request.description}</td><td>Approved</td><td>${request.request_id}</td>`
+            tableRow.innerHTML=`<td>${rowIndex}</td><td>${request.description}</td><td>Approved</td><td>${request.request_id}</td><td>${request.category}</td>`
         }else{
-            tableRow.innerHTML=`<td>${rowIndex}</td><td>${request.description}</td><td>Denied</td><td>${request.request_id}</td>`
+            tableRow.innerHTML=`<td>${rowIndex}</td><td>${request.description}</td><td>Denied</td><td>${request.request_id}</td><td>${request.category}</td>`
         }
         tableBody.appendChild(tableRow);
     }
@@ -39,7 +39,7 @@ fetch("http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/pen
         let tableRow = document.createElement("tr");
         let rowIndex = document.getElementById("pending-table").rows.length;
         
-        tableRow.innerHTML=`<td>${rowIndex}</td><td>${request.description}</td><td>Pending</td><td id="pending-request-id">${request.request_id}</td><td>${request.transaction_date}</td><td onClick="openImage()">View</td>`
+        tableRow.innerHTML=`<td>${rowIndex}</td><td>${request.description}</td><td>Pending</td><td id="pending-request-id">${request.request_id}</td><td>${request.category}</td><td>${request.transaction_date}</td><td onClick="openImage()">View</td>`
         tableBody.appendChild(tableRow);
     }
 });
@@ -121,7 +121,6 @@ function openImage() {
 
 });
 
-    
 }
 
 //https://www.geeksforgeeks.org/how-to-convert-image-into-base64-string-using-javascript/
@@ -140,32 +139,3 @@ reader.onload = function transfer() {
 reader.readAsDataURL(file);
 }
 
-
-
-
-// function submitRequest(){  
-//     const requestDescription = document.getElementById("new-request-description").value;
-//     const requestBody = new URLSearchParams(`description=${requestDescription}`);
-
-//     fetch("http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/request",{
-//         method: 'POST',
-//         headers:{
-//             'Authorization': localStorage.getItem('token')
-//         },
-//         body:requestBody
-//     })
-//     .then(response=>{   
-//         console.log(response.status);
-//         if(response.status === 200){
-//             window.alert("request submitted")
-//             location.reload();
-//         }else if(response.status === 403){
-//             window.alert("empty request here")    
-//         }else{
-//             window.alert("no authorization");
-//         }
-//     })
-//     .catch((error) => {
-//         console.log('Error:', error)
-//       });
-// }
