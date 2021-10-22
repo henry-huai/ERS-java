@@ -14,9 +14,9 @@ fetch("http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/res
         let tableRow = document.createElement("tr");
         let rowIndex = document.getElementById("resolved-table").rows.length;
         if(request.status > 0){
-            tableRow.innerHTML=`<td style="text-align:center">${rowIndex}</td><td>${request.description}</td><td>Approved</td><td style="text-align:center">${request.request_id}</td><td>${request.category}</td><td>${request.transaction_date}</td><td style="text-align:center">${request.user_id}</td><td>${request.status}</td>`
+            tableRow.innerHTML=`<td style="text-align:center">${rowIndex}</td><td>${request.description}</td><td>Approved</td><td style="text-align:center">${request.request_id}</td><td>${request.category}</td><td>${request.transaction_date}</td><td style="text-align:center">${request.user_id}</td><td style="text-align:center">${request.status}</td>`
         }else{
-            tableRow.innerHTML=`<td style="text-align:center">${rowIndex}</td><td>${request.description}</td><td>Denied</td><td style="text-align:center">${request.request_id}</td><td>${request.category}</td><td>${request.transaction_date}</td><td style="text-align:center">${request.user_id}</td><td>${-request.status}</td>`
+            tableRow.innerHTML=`<td style="text-align:center">${rowIndex}</td><td>${request.description}</td><td>Denied</td><td style="text-align:center">${request.request_id}</td><td>${request.category}</td><td>${request.transaction_date}</td><td style="text-align:center">${request.user_id}</td><td style="text-align:center">${-request.status}</td>`
         }
         tableBody.appendChild(tableRow);
     }
