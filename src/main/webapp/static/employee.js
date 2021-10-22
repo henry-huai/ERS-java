@@ -16,9 +16,9 @@ fetch("http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/res
         let tableRow = document.createElement("tr");
         let rowIndex = document.getElementById("resolved-table").rows.length;
         if(request.status > 0){
-            tableRow.innerHTML=`<td>${rowIndex}</td><td>${request.description}</td><td>Approved</td><td>${request.request_id}</td><td>${request.category}</td>`
+            tableRow.innerHTML=`<td style="text-align:center">${rowIndex}</td><td>${request.description}</td><td>Approved</td><td style="text-align:center">${request.request_id}</td><td>${request.category}</td><td>${request.transaction_date}</td>`
         }else{
-            tableRow.innerHTML=`<td>${rowIndex}</td><td>${request.description}</td><td>Denied</td><td>${request.request_id}</td><td>${request.category}</td>`
+            tableRow.innerHTML=`<td style="text-align:center">${rowIndex}</td><td>${request.description}</td><td>Denied</td><td style="text-align:center">${request.request_id}</td><td>${request.category}</td><td>${request.transaction_date}</td>`
         }
         tableBody.appendChild(tableRow);
     }
@@ -39,7 +39,7 @@ fetch("http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/pen
         let tableRow = document.createElement("tr");
         let rowIndex = document.getElementById("pending-table").rows.length;
         
-        tableRow.innerHTML=`<td>${rowIndex}</td><td>${request.description}</td><td>Pending</td><td id="pending-request-id">${request.request_id}</td><td>${request.category}</td><td>${request.transaction_date}</td><td onClick="openImage()">View</td>`
+        tableRow.innerHTML=`<td style="text-align:center">${rowIndex}</td><td>${request.description}</td><td>Pending</td><td id="pending-request-id" style="text-align:center">${request.request_id}</td><td>${request.category}</td><td>${request.transaction_date}</td><td onClick="openImage()">View</td>`
         tableBody.appendChild(tableRow);
     }
 });
