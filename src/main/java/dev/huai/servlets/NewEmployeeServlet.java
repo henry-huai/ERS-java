@@ -49,7 +49,7 @@ public class NewEmployeeServlet extends HttpServlet {
                     }
                     else {
                         resp.setStatus(403);
-                        logger.info("Adding new employee failed");
+                        logger.info("Adding user failed ,email has been taken");
                     }
                 } else {
                     // if there is a valid token, but it's that of a general user rather than an admin, we could send back a 403

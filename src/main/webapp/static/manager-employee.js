@@ -39,7 +39,7 @@ function addNewEmployee(e){
       window.alert("New Employee added")
       location.reload();
     }else{
-      window.alert("Invalid user credential")
+      window.alert("Opps! This email has been taken!")
       location.reload();
     }
   })
