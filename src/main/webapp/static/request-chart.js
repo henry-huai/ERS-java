@@ -9,7 +9,7 @@ fetch("http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/pen
 .then(data=>{
         var chart = new CanvasJS.Chart("pending-request-chart", {
             title:{
-                text: "Pending requests analysis"              
+                text: "Pending expense reimbursement requests analysis"              
             },
             axisY: {
                 title: "pending requests",
@@ -42,7 +42,7 @@ fetch("http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/res
     //https://canvasjs.com/javascript-charts/multiple-axis-column-chart/
         var chart = new CanvasJS.Chart("resolved-request-chart", {
             title:{
-                text: "Resolved requests analysis"              
+                text: "Resolved expense reimbursement requests analysis"              
             },
             axisY: [{
                 title: "approved requests",

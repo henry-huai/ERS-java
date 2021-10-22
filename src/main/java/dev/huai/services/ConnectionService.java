@@ -9,7 +9,6 @@ public class ConnectionService {
 
         try {
             //registering our JDBC driver in the classpath
-            //
             Class.forName("org.postgresql.Driver");
             String url = System.getenv("Project1DB_URL");
             String username = System.getenv("Project1DB_Username");

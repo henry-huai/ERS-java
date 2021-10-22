@@ -41,7 +41,7 @@ public class RequestServlet extends HttpServlet {
                     Request request = new Request();
                     request.setDescription(req.getParameter("description"));
                     request.setUser_id(currentUser.getUser_id());
-                    request.setBase64encodedString(req.getParameter("base64"));
+                    //request.setBase64encodedString(req.getParameter("base64"));
                     request.setCategory(req.getParameter("category"));
                     //System.out.println(request.toString());
                     Boolean result = requestServices.addRequest(request.getUser_id(), request.getDescription(),request.getCategory());
@@ -82,7 +82,6 @@ public class RequestServlet extends HttpServlet {
                 if(request.getUser_id()== currentUser.getUser_id() || currentUser.getUserRole()==UserRole.MANAGER){
                     try(PrintWriter pw = resp.getWriter()){
                         ObjectMapper om = new ObjectMapper();
-                        System.out.println(request.getBase64encodedString());
                         String requestJson = om.writeValueAsString(request.getBase64encodedString());
                         pw.write(requestJson);
                     }

@@ -13,7 +13,6 @@ create table users(
 
 create table requests(
 	request_id serial primary key,
-	image text,
 	status int default 0,
 	description varchar(100) not null,
 	transaction_date Date not null default current_date,

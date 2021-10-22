@@ -22,6 +22,14 @@ public class Request {
             this.category = "BUSINESS";
     }
 
+    public String getBase64encodedString() {
+        return base64encodedString;
+    }
+
+    public void setBase64encodedString(String base64encodedString) {
+        this.base64encodedString = base64encodedString;
+    }
+
     public String getTransaction_date() {
         return transaction_date;
     }
@@ -30,13 +38,6 @@ public class Request {
         this.transaction_date = transaction_date;
     }
 
-    public String getBase64encodedString() {
-        return base64encodedString;
-    }
-
-    public void setBase64encodedString(String base64encodedString) {
-        this.base64encodedString = base64encodedString;
-    }
 
     public int getRequest_id() {
         return request_id;
@@ -77,7 +78,6 @@ public class Request {
                 ", description='" + description + '\'' +
                 ", user_id=" + user_id +
                 ", status=" + status +
-                ", base64encodedString='" + base64encodedString + '\'' +
                 ", transaction_date='" + transaction_date + '\'' +
                 ", category='" + category + '\'' +
                 '}';
@@ -88,11 +88,11 @@ public class Request {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Request request = (Request) o;
-        return request_id == request.request_id && user_id == request.user_id && status == request.status && Objects.equals(description, request.description) && Objects.equals(base64encodedString, request.base64encodedString) && Objects.equals(transaction_date, request.transaction_date) && Objects.equals(category, request.category);
+        return request_id == request.request_id && user_id == request.user_id && status == request.status && Objects.equals(description, request.description) && Objects.equals(transaction_date, request.transaction_date) && Objects.equals(category, request.category);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(request_id, description, user_id, status, base64encodedString, transaction_date, category);
+        return Objects.hash(request_id, description, user_id, status, transaction_date, category);
     }
 }
