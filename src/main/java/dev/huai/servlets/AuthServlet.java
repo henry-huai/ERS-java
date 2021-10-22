@@ -26,14 +26,10 @@ public class AuthServlet extends HttpServlet {
 
         int user_idParam = Integer.parseInt(req.getParameter("user_id"));
         String passwordParam = req.getParameter("password");
-
-        System.out.println("Credentials received: "+user_idParam +" "+passwordParam);
-
         User user = userServices.getUserByCredentials(user_idParam, passwordParam);
         if(user == null){
             resp.setStatus(403);
             logger.info("Invalid login credential");
-            //ec2-3-144-234-17.us-east-2.compute.amazonaws.com
             resp.setHeader("Location", "http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/static/login.html");
         } else {
             resp.setStatus(200);
@@ -50,21 +46,17 @@ public class AuthServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String authToken = req.getHeader("Authorization");
-        System.out.println(authToken);
-
         boolean tokenIsValidFormat = authService.validateToken(authToken);
         if(!tokenIsValidFormat){
             resp.setStatus(400);
             logger.info("Invalid token format");
         } else {
-            User currentUser = authService.getUserByToken(authToken); // return null if none found
+            User currentUser = authService.getUserByToken(authToken);
 
             if (currentUser == null) {
                 resp.setStatus(401);
                 logger.info("Auth token invalid - no user");
-
             } else {
-                // if there is a valid token and that token is for an admin, return list of users
                 resp.setStatus(200);
                 try (PrintWriter pw = resp.getWriter()) {
                     User user = userServices.getUserByID(currentUser.getUser_id());
@@ -72,7 +64,6 @@ public class AuthServlet extends HttpServlet {
                     String requestJson = om.writeValueAsString(user);
                     pw.write(requestJson);
                     logger.info("User information returned");
-                    // write to response body
                 }
             }
         }

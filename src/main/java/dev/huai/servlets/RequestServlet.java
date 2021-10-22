@@ -26,28 +26,24 @@ public class RequestServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String authToken = req.getHeader("Authorization");
-        System.out.println("token is"+authToken);
-
         boolean tokenIsValidFormat = authService.validateToken(authToken);
         if (!tokenIsValidFormat) {
             resp.setStatus(400);
             logger.info("Invalid token");
         } else {
-            User currentUser = authService.getUserByToken(authToken); // return null if none found
+            User currentUser = authService.getUserByToken(authToken);
 
             if (currentUser == null) {
                 resp.setStatus(401);
                 logger.info("Token doesn't match database");
             } else {
-                // if there is a valid token and that token is for an admin, return list of users
                 if (currentUser.getUserRole() == UserRole.EMPLOYEE) {
-                    //resp.setStatus(200);
                     Request request = new Request();
                     request.setDescription(req.getParameter("description"));
                     request.setUser_id(currentUser.getUser_id());
                     request.setBase64encodedString(req.getParameter("base64"));
                     request.setCategory(req.getParameter("category"));
-                    System.out.println(request.toString());
+                    //System.out.println(request.toString());
                     Boolean result = requestServices.addRequest(request.getUser_id(), request.getDescription(),request.getCategory());
                     if (result == true) {
                         resp.setStatus(200);
@@ -67,8 +63,6 @@ public class RequestServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String authToken = req.getHeader("Authorization");
-        System.out.println("token is"+authToken);
-
         boolean tokenIsValidFormat = authService.validateToken(authToken);
         if (!tokenIsValidFormat) {
             resp.setStatus(400);
@@ -82,9 +76,9 @@ public class RequestServlet extends HttpServlet {
             } else {
                 int request_id = Integer.parseInt(req.getHeader("Request"));
                 //int request_id = Integer.parseInt(req.getParameter("request_id"));
-                System.out.println("request id is " + request_id);
+                //System.out.println("request id is " + request_id);
                 Request request = requestServices.getRequestByID(request_id);
-                System.out.println(request.getUser_id()+"  "+ currentUser.getUser_id());
+                //System.out.println(request.getUser_id()+"  "+ currentUser.getUser_id());
                 if(request.getUser_id()== currentUser.getUser_id() || currentUser.getUserRole()==UserRole.MANAGER){
                     try(PrintWriter pw = resp.getWriter()){
                         ObjectMapper om = new ObjectMapper();

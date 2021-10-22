@@ -25,17 +25,17 @@ public class ResolvedRequestServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String authToken = req.getHeader("Authorization");
-
         boolean tokenIsValidFormat = authService.validateToken(authToken);
         if(!tokenIsValidFormat){
-            resp.sendError(400, "Improper token format; cannot fulfill your request");
+            resp.setStatus(400);
+            logger.info("Improper token format; cannot fulfill your request");
         } else {
-            User currentUser = authService.getUserByToken(authToken); // return null if none found
+            User currentUser = authService.getUserByToken(authToken);
 
             if(currentUser==null){
-                resp.sendError(401, "Auth token invalid - no user");
+                resp.setStatus(401);
+                logger.info("Token invalid- no user matches");
             } else {
-                // if there is a valid token and that token is for an admin, return list of users
                 if(currentUser.getUserRole() == UserRole.EMPLOYEE){
                     resp.setStatus(200);
 
@@ -44,8 +44,8 @@ public class ResolvedRequestServlet extends HttpServlet {
                         ObjectMapper om = new ObjectMapper();
                         String requestJson = om.writeValueAsString(pendingRequests);
                         pw.write(requestJson);
-                        // write to response body
                     }
+                    logger.info("List returned");
                 } else if(currentUser.getUserRole() == UserRole.MANAGER){
                     resp.setStatus(200);
 
@@ -55,14 +55,12 @@ public class ResolvedRequestServlet extends HttpServlet {
                         String requestJson = om.writeValueAsString(pendingRequests);
                         pw.write(requestJson);
                     }
-
+                    logger.info("List returned");
                 }else {
-                    // if there is a valid token, but it's that of a general user rather than an admin, we could send back a 403
-                    resp.sendError(403, "Invalid user role for current request");
+                    resp.setStatus(403);
+                    logger.info("Invalid user role, no authorization");
                 }
             }
-
-
         }
     }
 }

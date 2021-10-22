@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Logger;
 
 public class AnalyzeResolvedRequestServlet extends HttpServlet {
@@ -29,7 +28,7 @@ public class AnalyzeResolvedRequestServlet extends HttpServlet {
         boolean tokenIsValidFormat = authService.validateToken(authToken);
         if (!tokenIsValidFormat) {
             resp.setStatus(400);
-            logger.info("Invalid token");
+            logger.info("Invalid token format");
         } else {
             User currentUser = authService.getUserByToken(authToken); // return null if none found
 
@@ -46,9 +45,13 @@ public class AnalyzeResolvedRequestServlet extends HttpServlet {
                         pw.write(requestJson);
                     }
                     resp.setStatus(200);
+                    logger.info("Request analysis data returned");
                 }
-                else
+                else {
                     resp.setStatus(403);
+                    logger.info("User doesn't have authorization level");
+                }
+
             }
         }
     }

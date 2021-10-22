@@ -12,9 +12,7 @@ public class AuthService {
         }
 
         String[] tokenArr = authToken.split(":");
-        if(tokenArr.length != 2){ // "a:b:c" "bananas"
-            // we first check to see if our token has 2 values, separated by a colon
-            // if it has more or less than 2, we return false
+        if(tokenArr.length != 2){
             return false;
         }
 
@@ -26,7 +24,7 @@ public class AuthService {
 
         // then we look at the second value, making sure it matches a value in our enum
         String roleString = tokenArr[1];
-        UserRole[] roles = UserRole.values(); // GENERAL, ADMIN
+        UserRole[] roles = UserRole.values();
         for(UserRole role: roles){
             if(role.toString().equals(roleString)){ // check to see if the second value is one of our enum values
                 return true;
@@ -35,7 +33,7 @@ public class AuthService {
         return false;
     }
 
-    public User getUserByToken(String authToken){ // "2:admin"
+    public User getUserByToken(String authToken){
         String[] tokenArr = authToken.split(":");
         int user_id = Integer.parseInt(tokenArr[0]);
         return userService.getUserByID(user_id);

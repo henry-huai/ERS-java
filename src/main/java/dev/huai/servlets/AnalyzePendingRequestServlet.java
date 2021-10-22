@@ -25,14 +25,12 @@ public class AnalyzePendingRequestServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String authToken = req.getHeader("Authorization");
-
         boolean tokenIsValidFormat = authService.validateToken(authToken);
         if (!tokenIsValidFormat) {
             resp.setStatus(400);
-            logger.info("Invalid token");
+            logger.info("Invalid token format");
         } else {
-            User currentUser = authService.getUserByToken(authToken); // return null if none found
-
+            User currentUser = authService.getUserByToken(authToken);
             if (currentUser == null) {
                 resp.setStatus(401);
                 logger.info("Token doesn't match database");
@@ -48,13 +46,15 @@ public class AnalyzePendingRequestServlet extends HttpServlet {
                         ObjectMapper om = new ObjectMapper();
                         String requestJson = om.writeValueAsString(arr);
                         pw.write(requestJson);
-                        // write to response body
                     }
                     resp.setStatus(200);
+                    logger.info("Request analysis returned");
                 }
-                else
+                else{
                     resp.setStatus(403);
-                //No authorization
+                    logger.info("User doesn't have authorization level");
+                }
+
         }
     }
     }

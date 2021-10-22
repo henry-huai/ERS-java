@@ -11,6 +11,10 @@ fetch("http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/pen
             title:{
                 text: "Pending requests analysis"              
             },
+            axisY: {
+                title: "pending requests",
+                
+            },
             data: [              
             {
                 type: "column",
@@ -40,20 +44,20 @@ fetch("http://ec2-3-144-234-17.us-east-2.compute.amazonaws.com:8080/project1/res
             title:{
                 text: "Resolved requests analysis"              
             },
-            axisY: {
+            axisY: [{
                 title: "approved requests",
                 titleFontColor: "#4F81BC",
                 lineColor: "#4F81BC",
                 labelFontColor: "#4F81BC",
-                tickColor: "#4F81BC"
+                tickColor: "#4F81BC",
             },
-            axisY2: {
+            {
                 title: "denied requests",
                 titleFontColor: "#C0504E",
                 lineColor: "#C0504E",
                 labelFontColor: "#C0504E",
                 tickColor: "#C0504E"
-            },	
+            }],	
             toolTip: {
                 shared: true
             },
